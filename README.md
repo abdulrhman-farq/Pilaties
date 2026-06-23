@@ -30,9 +30,14 @@ Pilaties/
 │   ├── 01-دراسة-الجدوى-الكاملة.md      ← الدراسة الكاملة (8 أقسام)
 │   ├── 02-خطة-التشغيل-والتسويق-90-يوم.md ← خطة تنفيذية يومية لأول 90 يوماً
 │   └── 03-عرض-المستثمر-Pitch-Deck.md    ← عرض تقديمي للمستثمر (12 شريحة)
-└── financial-model/
-    ├── النموذج-المالي-بيلاتس.xlsx        ← نموذج Excel تفاعلي (5 أوراق)
-    └── build_model.py                  ← السكربت المولِّد للنموذج
+├── financial-model/
+│   ├── النموذج-المالي-بيلاتس.xlsx        ← نموذج Excel (5 أوراق)
+│   └── build_model.py                  ← السكربت المولِّد للنموذج
+└── exports/
+    ├── دراسة-الجدوى-بيلاتس.pdf           ← الدراسة بصيغة PDF (عربي RTL)
+    ├── عرض-المستثمر-بيلاتس.pptx          ← عرض PowerPoint (13 شريحة)
+    ├── build_pdf.py / build_pptx.py    ← سكربتات التوليد
+    └── fonts/                          ← خط Amiri العربي (لتوليد PDF)
 ```
 
 ---
@@ -53,6 +58,13 @@ Pilaties/
 
 > لتعديل الافتراضات وإعادة توليد الملف: عدّل قسم `INPUTS` في `build_model.py` ثم نفّذ:
 > `pip install openpyxl && python3 financial-model/build_model.py`
+
+### 5. ملفات العرض الجاهزة ([exports/](./exports/))
+- **[دراسة-الجدوى-بيلاتس.pdf](./exports/دراسة-الجدوى-بيلاتس.pdf)** — نسخة PDF احترافية من الدراسة (عربي بمحاذاة RTL، 7 صفحات، جداول ملوّنة).
+- **[عرض-المستثمر-بيلاتس.pptx](./exports/عرض-المستثمر-بيلاتس.pptx)** — عرض PowerPoint جاهز للعرض (13 شريحة).
+
+> لإعادة التوليد: `pip install reportlab arabic-reshaper python-bidi python-pptx` ثم
+> `python3 exports/build_pdf.py && python3 exports/build_pptx.py`
 
 ---
 
