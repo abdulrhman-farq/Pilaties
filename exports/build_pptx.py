@@ -9,6 +9,7 @@ from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.oxml.ns import qn
 
 NAVY = RGBColor(0x1F, 0x4E, 0x78)
 TEAL = RGBColor(0x2E, 0x8B, 0x8B)
@@ -29,6 +30,24 @@ SW, SH = prs.slide_width, prs.slide_height
 def rtl(paragraph):
     pPr = paragraph._p.get_or_add_pPr()
     pPr.set("rtl", "1")
+
+
+def set_font(run, size=None, bold=None, color=None):
+    """يضبط خط النص اللاتيني + العربي (complex-script) لضمان وصل الحروف العربية."""
+    if size is not None:
+        run.font.size = size
+    if bold is not None:
+        run.font.bold = bold
+    if color is not None:
+        run.font.color.rgb = color
+    run.font.name = FONT  # a:latin
+    rPr = run._r.get_or_add_rPr()
+    for tag in ("a:ea", "a:cs"):  # خط شرق آسيوي + خط معقّد (العربي)
+        el = rPr.find(qn(tag))
+        if el is None:
+            el = rPr.makeelement(qn(tag), {})
+            rPr.append(el)
+        el.set("typeface", FONT)
 
 
 def slide():
@@ -58,8 +77,7 @@ def text(s, x, y, w, h, runs, size=18, color=DARK, bold=False,
         p.line_spacing = line_spacing
         rtl(p)
         r = p.add_run(); r.text = line
-        r.font.size = Pt(size); r.font.bold = bold
-        r.font.color.rgb = color; r.font.name = FONT
+        set_font(r, size=Pt(size), bold=bold, color=color)
     return tb
 
 
@@ -84,7 +102,7 @@ def bullets(s, items, x=Inches(0.7), y=Inches(1.6), w=Inches(12), size=20,
             p.space_after = Pt(10)
         rtl(p)
         r = p.add_run(); r.text = "•  " + it
-        r.font.size = Pt(size); r.font.color.rgb = color; r.font.name = FONT
+        set_font(r, size=Pt(size), color=color)
     return tb
 
 
@@ -114,10 +132,9 @@ def table(s, rows, x, y, w, h, header=True, col_widths=None,
             p = tf.paragraphs[0]; p.alignment = PP_ALIGN.CENTER
             rtl(p)
             run = p.add_run(); run.text = str(rows[r][c])
-            run.font.size = Pt(font_size)
-            run.font.name = FONT
-            run.font.bold = (r == 0) or (c == 0 and nc > 2)
-            run.font.color.rgb = WHITE if r == 0 else DARK
+            set_font(run, size=Pt(font_size),
+                     bold=(r == 0) or (c == 0 and nc > 2),
+                     color=WHITE if r == 0 else DARK)
     return gt
 
 
