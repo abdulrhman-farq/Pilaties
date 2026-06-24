@@ -225,6 +225,16 @@ story.append(mktable([
 ], widths=[8 * cm, 4 * cm, 5 * cm], highlight_rows={5: LGREY}))
 story.append(PageBreak())
 
+# --- مخطط الطابق والتوزيع ---
+story.append(section("2-ب) مخطط الطابق والتوزيع (10م × 12م)"))
+story.append(S(1, 0.3 * cm))
+_fp = os.path.join(HERE, "charts", "floorplan.png")
+if os.path.exists(_fp):
+    story.append(Image(_fp, width=17 * cm, height=12.52 * cm))
+story.append(S(1, 0.2 * cm))
+story.append(P("وحدة زاوية بأول العمارة؛ المدخل من الفتحة الثانية (5م) مع جدار خصوصية منحنٍ والاستقبال خلفه. الأبعاد بالأمتار مدرجة لكل غرفة، وجدول المساحات يجمع على 120 م².", SMALL))
+story.append(PageBreak())
+
 # --- الدراسة المالية ---
 story.append(section("3) الدراسة المالية"))
 story.append(S(1, 0.3 * cm))
