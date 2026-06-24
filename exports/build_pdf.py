@@ -14,7 +14,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer, Table,
-                                TableStyle, PageBreak)
+                                TableStyle, PageBreak, Image)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.path.join(HERE, "fonts")
@@ -268,6 +268,10 @@ story.append(mktable([
     ["فترة الاسترداد", "—", "13 شهر", "5.1 شهر", "3.2 شهر"],
 ], widths=[5 * cm, 3 * cm, 3 * cm, 3 * cm, 3 * cm],
     highlight_rows={3: GREEN, 4: GREEN}))
+story.append(S(1, 0.3 * cm))
+_sc = os.path.join(HERE, "charts", "scenarios.png")
+if os.path.exists(_sc):
+    story.append(Image(_sc, width=12 * cm, height=6.86 * cm))
 story.append(S(1, 0.4 * cm))
 story.append(Paragraph(ar("المؤشرات المالية الرئيسية"), SEC))
 story.append(mktable([
@@ -299,6 +303,16 @@ story.append(mktable([
     highlight_rows={1: GREEN}))
 story.append(S(1, 0.2 * cm))
 story.append(P("القرار المعتمد: سعر القائمة ≈172.5 ريال شامل الضريبة (الصافي 150) — الحالة (أ). رسوم الدفع والإهلاك أثرهما طفيف؛ معالجة الضريبة هي المتغيّر الحاسم، والنموذج يبقى مجدياً حتى في الحالة الأكثر تحفظاً.", SMALL))
+story.append(PageBreak())
+
+# --- منحنى التدفق النقدي الشهري ---
+story.append(section("4-ب) التدفق النقدي الشهري لسنة الإطلاق (Launch Runway)"))
+story.append(S(1, 0.3 * cm))
+_jc = os.path.join(HERE, "charts", "jcurve.png")
+if os.path.exists(_jc):
+    story.append(Image(_jc, width=16 * cm, height=8.2 * cm))
+story.append(S(1, 0.2 * cm))
+story.append(P("التدفق التشغيلي يتحوّل موجباً من الشهر السادس، والتراكمي من الشهر الثاني عشر. أعمق قاع نقدي ≈ -106,000 ريال (الشهر 5)، لذا يُوصى بتمويل 300,000 ريال (رأس مال عامل ≈ 120,000) لتجاوز أشهر الإطلاق بأمان.", BODY))
 story.append(PageBreak())
 
 # --- المخاطر ---

@@ -274,8 +274,17 @@ table(s, [
 ], Inches(1.2), Inches(1.7), Inches(11), Inches(3.6),
     col_widths=[Inches(3.5), Inches(7.5)], font_size=17)
 
-# 12 — الطلب
-s = slide(); title_bar(s, "الطلب التمويلي", 12)
+# 12 — التدفق النقدي لسنة الإطلاق (رسم)
+s = slide(); title_bar(s, "التدفق النقدي لسنة الإطلاق (Launch Runway)", 12)
+_jc = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts", "jcurve.png")
+if os.path.exists(_jc):
+    s.shapes.add_picture(_jc, Inches(0.92), Inches(1.45), width=Inches(11.5))
+text(s, Inches(0.7), Inches(7.0), Inches(12), Inches(0.4),
+     "القاع ~ -106 ألف (الشهر 5) ← يُوصى بتمويل 300 ألف / رأس مال عامل ~120 ألف",
+     size=13, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
+
+# 13 — الطلب
+s = slide(); title_bar(s, "الطلب التمويلي", 13)
 text(s, Inches(0.7), Inches(1.7), Inches(12), Inches(1.0),
      "التمويل المطلوب: 300,000 ريال (يشمل هامش أمان ~25 ألف)",
      size=26, color=NAVY, bold=True, align=PP_ALIGN.CENTER)
@@ -290,8 +299,8 @@ text(s, Inches(2.5), Inches(5.6), Inches(8.3), Inches(1.1),
      size=18, color=WHITE, bold=True, align=PP_ALIGN.CENTER,
      anchor=MSO_ANCHOR.MIDDLE)
 
-# 13 — لماذا الآن
-s = slide(); title_bar(s, "لماذا الآن؟", 13)
+# 14 — لماذا الآن
+s = slide(); title_bar(s, "لماذا الآن؟", 14)
 bullets(s, [
     "السوق في ذروة النمو ومدعوم حكومياً (رؤية 2030).",
     "شريحة النساء هي الأسرع نمواً وغير مُشبَعة في كثير من الأحياء.",
